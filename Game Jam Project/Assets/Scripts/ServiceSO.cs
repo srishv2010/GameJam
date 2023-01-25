@@ -1,0 +1,1 @@
+using UnityEngine;[CreateAssetMenu(menuName = "Create Service", fileName = "Service")]public class ServiceSO : ScriptableObject{public string serviceName;public bool required;}

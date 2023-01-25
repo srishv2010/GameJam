@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47eddaa3ae82c8748a22e0bd279cca48, type: 3}
+  m_Name: House
+  m_EditorClassIdentifier: 
+  buildingPrefab: {fileID: 1593937742441068266, guid: ddbfc78d5b9bfbf419c65763e029ab0e,
+    type: 3}
+  buildingService: {fileID: 0}
+  cost: 5
+  population: 5
+  energyOutput: -5
+  moneyOutput: 0
+  foodOutput: -5
+  happinessOutput: 0
+  isTaxable: 1
+  taxFrequency: 5
