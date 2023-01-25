@@ -61,6 +61,10 @@ public class GridBuildSystem : MonoBehaviour
     public Slider roundTimer;
     public TextMeshProUGUI roundTimeLeftText;
 
+    public Slider happinessSlider;
+    public Image happinessSliderFillImage;
+
+    public bool tutorialComplete;
 
     private void Start()
     {
@@ -73,12 +77,23 @@ public class GridBuildSystem : MonoBehaviour
 
     void Update()
     {
-
-        timeLeft -= Time.deltaTime;
-        if(timeLeft < 0)
+        if(happiness > 0)
         {
-            timeLeft = timePerTurn;
-            GameIteration();
+            happinessSlider.value = Mathf.Round(Mathf.Clamp(happiness / 5f, 0f, 2f));
+        }
+        else
+        {
+            happinessSlider.value = happiness;
+        }
+        happinessSliderFillImage.color = Color.Lerp(Color.red, Color.green, (happiness + 2) / 5);
+        if (tutorialComplete)
+        {
+            timeLeft -= Time.deltaTime;
+            if(timeLeft < 0)
+            {
+                timeLeft = timePerTurn;
+                GameIteration();
+            }
         }
         roundTimer.value = Mathf.Round(timeLeft);
         roundTimeLeftText.text = Mathf.Ceil(timeLeft).ToString();
@@ -175,7 +190,7 @@ public class GridBuildSystem : MonoBehaviour
         energySupply += energyChange;
         foodSupply += foodChange;
         money += moneyChange;
-        if (money < 0 || foodSupply < 0 || energySupply < 0 || happiness < 0 || population > populationCapacity)
+        if (money < 0 || foodSupply < 0 || energySupply < 0 || happiness < -2f || population > populationCapacity)
         {
             print("gameOver");
         }
@@ -211,6 +226,7 @@ public class GridBuildSystem : MonoBehaviour
             moneyChange += buildingSO.moneyOutput;
 
             populationCapacity += buildingSO.population;
+            happiness += buildingSO.happinessOutput;
 
             active = null;
         }
@@ -271,6 +287,7 @@ public class GridBuildSystem : MonoBehaviour
                     moneyChange -= buildingSO.moneyOutput;
 
                     populationCapacity -= buildingSO.population;
+                    happiness -= buildingSO.happinessOutput;
 
                     buildings.Remove(item);
                     Destroy(item);

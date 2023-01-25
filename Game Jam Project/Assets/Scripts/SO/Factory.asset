@@ -18,7 +18,7 @@ MonoBehaviour:
   cost: 25
   population: 0
   energyOutput: 10
-  moneyOutpout: -5
+  moneyOutput: 0
   foodOutput: 0
   happinessOutput: -1
   isTaxable: 0
