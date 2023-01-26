@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -38,8 +39,6 @@ public class GridBuildSystem : MonoBehaviour
     public float money = 5000f;
     public float populationCapacity = 0f;
     public float energySupply = 10f;
-    public float happiness = 50f;
-    public float happinessPercentage;
 
     public float foodChange = 0f;
     public float moneyChange = 0f;
@@ -61,31 +60,22 @@ public class GridBuildSystem : MonoBehaviour
     public Slider roundTimer;
     public TextMeshProUGUI roundTimeLeftText;
 
-    public Slider happinessSlider;
-    public Image happinessSliderFillImage;
+    public bool tutorialComplete = true;
+    public bool gameRunning = true;
 
-    public bool tutorialComplete;
+    public GameObject gameOverScreen;
+    
 
     private void Start()
     {
         timeLeft = timePerTurn;
         instance = this;
         Selected(0);
-        InvokeRepeating("GameIteration", 20f, 10f);
         roundTimer.maxValue = timePerTurn;
     }
 
     void Update()
     {
-        if(happiness > 0)
-        {
-            happinessSlider.value = Mathf.Round(Mathf.Clamp(happiness / 5f, 0f, 2f));
-        }
-        else
-        {
-            happinessSlider.value = happiness;
-        }
-        happinessSliderFillImage.color = Color.Lerp(Color.red, Color.green, (happiness + 2) / 5);
         if (tutorialComplete)
         {
             timeLeft -= Time.deltaTime;
@@ -95,7 +85,7 @@ public class GridBuildSystem : MonoBehaviour
                 GameIteration();
             }
         }
-        roundTimer.value = Mathf.Round(timeLeft);
+        roundTimer.value = timeLeft;
         roundTimeLeftText.text = Mathf.Ceil(timeLeft).ToString();
 
         moneyText.text = ("Gold: £" + money.ToString());
@@ -190,10 +180,26 @@ public class GridBuildSystem : MonoBehaviour
         energySupply += energyChange;
         foodSupply += foodChange;
         money += moneyChange;
-        if (money < 0 || foodSupply < 0 || energySupply < 0 || happiness < -2f || population > populationCapacity)
+        if (money < 0 || foodSupply < 0 || energySupply < 0 || population > populationCapacity)
         {
-            print("gameOver");
+            gameRunning = false;
+            gameOverScreen.SetActive(true);
         }
+    }
+
+    public void resetGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void openMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void toggleGameState()
+    {
+        gameRunning = false;
     }
 
     public void AddMoney(int amount)
@@ -226,7 +232,6 @@ public class GridBuildSystem : MonoBehaviour
             moneyChange += buildingSO.moneyOutput;
 
             populationCapacity += buildingSO.population;
-            happiness += buildingSO.happinessOutput;
 
             active = null;
         }
@@ -287,7 +292,6 @@ public class GridBuildSystem : MonoBehaviour
                     moneyChange -= buildingSO.moneyOutput;
 
                     populationCapacity -= buildingSO.population;
-                    happiness -= buildingSO.happinessOutput;
 
                     buildings.Remove(item);
                     Destroy(item);

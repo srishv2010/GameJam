@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8776027918922997823}
   - component: {fileID: -7052526419922518952}
   m_Layer: 6
-  m_Name: Building_Factory
+  m_Name: Building_Power-Plant
   m_TagString: Factory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,8 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: 117249a91cf4fe64ab5555fa4ed3f33b, type: 2}
-  isTaxable: 0
   coin: {fileID: 3035819501676735768, guid: 6be442c28d53ab0408a7ad0f2da3667a, type: 3}
+  placed: 0
+  taxTimeLeft: 0
 --- !u!1001 &8776027919573259578
 PrefabInstance:
   m_ObjectHideFlags: 0

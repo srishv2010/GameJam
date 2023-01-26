@@ -24,8 +24,6 @@ public class CameraController : MonoBehaviour
     public Vector3 rotateStartPosition;
     public Vector3 rotateCurrentPosition;
 
-    public GameObject buildingList;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -47,11 +45,8 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if (!buildingList.activeSelf)
-            {
-                HandleMouseInput();
-                HandleMovementInput();
-            }
+            HandleMouseInput();
+            HandleMovementInput();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
