@@ -16,11 +16,11 @@ MonoBehaviour:
   buildingPrefab: {fileID: 7026958885853521645, guid: 51d54a2a828b57d438d04660861369ff,
     type: 3}
   buildingService: {fileID: 0}
-  cost: 10
+  cost: 15
   population: 0
   energyOutput: -3
   moneyOutput: 0
-  foodOutput: 20
+  foodOutput: 10
   happinessOutput: -1
   isTaxable: 0
   taxFrequency: 0

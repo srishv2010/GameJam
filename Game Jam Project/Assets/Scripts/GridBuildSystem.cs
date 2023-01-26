@@ -77,6 +77,11 @@ public class GridBuildSystem : MonoBehaviour
     public float built;
     public TextMeshProUGUI questText;
 
+    public Color changeColor;
+    public Color changeColorH;
+    public Color selectedColor;
+    public Color buttonColor;
+
     private void Start()
     {
         chooseQuest();
@@ -113,38 +118,38 @@ public class GridBuildSystem : MonoBehaviour
 
         if (money + moneyChange <= 0)
         {
-            moneyChangeText.transform.parent.gameObject.GetComponent<Image>().color = Color.red;
+            moneyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
         }
         else
         {
-            moneyChangeText.transform.parent.gameObject.GetComponent<Image>().color = Color.white;
+            moneyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
         }
 
         if (foodSupply + foodChange <= 0)
         {
-            foodChangeText.transform.parent.gameObject.GetComponent<Image>().color = Color.red;
+            foodChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
         }
         else
         {
-            foodChangeText.transform.parent.gameObject.GetComponent<Image>().color = Color.white;
+            foodChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
         }
 
         if (energySupply + energyChange <= 0)
         {
-            energyChangeText.transform.parent.gameObject.GetComponent<Image>().color = Color.red;
+            energyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
         }
         else
         {
-            energyChangeText.transform.parent.gameObject.GetComponent<Image>().color = Color.white;
+            energyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
         }
 
         if (population + populationChange > populationCapacity)
         {
-            populationChangeText.transform.parent.gameObject.GetComponent<Image>().color = Color.red;
+            populationChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
         }
         else
         {
-            populationChangeText.transform.parent.gameObject.GetComponent<Image>().color = Color.white;
+            populationChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
         }
 
 
@@ -158,7 +163,7 @@ public class GridBuildSystem : MonoBehaviour
 
             foreach (Image img in typeButtons)
             {
-                img.color = new Color(0, 100, 255, 255);
+                img.color = buttonColor;
             }
         }
 
@@ -295,7 +300,7 @@ public class GridBuildSystem : MonoBehaviour
     {
         foreach(Image img in typeButtons)
         {
-            img.color = new Color(0, 100, 255, 255);
+            img.color = buttonColor;
         }
 
         deleteMode = false;
@@ -320,11 +325,11 @@ public class GridBuildSystem : MonoBehaviour
         if (selected == -1)
         {
             deleteMode = true;
-            typeButtons[typeButtons.Count - 1].color = Color.red;
+            typeButtons[typeButtons.Count - 1].color = selectedColor;
             return;
         }
         buildMode = true;
-        typeButtons[selected].color = Color.red;
+        typeButtons[selected].color = selectedColor;
     }
 
     public void Delete()
