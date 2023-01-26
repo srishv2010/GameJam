@@ -8,6 +8,9 @@ using TMPro;
 
 public class GridBuildSystem : MonoBehaviour
 {
+    public Material grassMAT;
+    public Transform ground;
+
     public static GridBuildSystem instance;
 
     public List<Image> typeButtons = new List<Image>();
@@ -64,10 +67,20 @@ public class GridBuildSystem : MonoBehaviour
     public bool gameRunning = true;
 
     public GameObject gameOverScreen;
-    
+
+    public Quests questSystem;
+
+    public float roundsComplete;
+    public float levelsComplete = 1;
+
+    public Quests.Quest currentQuest;
+    public float built;
+    public TextMeshProUGUI questText;
 
     private void Start()
     {
+        chooseQuest();
+        grassMAT.mainTextureScale = Vector2.one * 10f;
         timeLeft = timePerTurn;
         instance = this;
         Selected(0);
@@ -172,19 +185,48 @@ public class GridBuildSystem : MonoBehaviour
         }
     }
 
+    public void chooseQuest()
+    {
+        if(roundsComplete < 5)
+        {
+            List<Quests.Quest> x = questSystem.quests[(int)roundsComplete - 1].questsList;
+            currentQuest =  x[(int)Mathf.Round(Random.Range(0, x.Count))];
+        }
+        else
+        {
+            List<Quests.Quest> x = questSystem.quests[4].questsList;
+            currentQuest = x[(int)Mathf.Round(Random.Range(0, 4))];
+        }
+        built = 0;
+        string s = "";
+        if(currentQuest.numberOfBuildings > 1)
+        {
+            s = "s";
+        }
+        questText.text = $"Build {currentQuest.numberOfBuildings} {currentQuest.buildingType.BuildingName + s} ({built}/{currentQuest.numberOfBuildings})";
+    }
+
     public void GameIteration()
     {
+        roundsComplete += 1;
         population += populationChange;
         print(population);
 
         energySupply += energyChange;
         foodSupply += foodChange;
         money += moneyChange;
-        if (money < 0 || foodSupply < 0 || energySupply < 0 || population > populationCapacity)
+        if (money < 0 || foodSupply < 0 || energySupply < 0 || population > populationCapacity || currentQuest.numberOfBuildings > built)
         {
             gameRunning = false;
             gameOverScreen.SetActive(true);
         }
+        if(roundsComplete == levelsComplete * 20)
+        {
+            levelsComplete += 1;
+            ground.localScale = 1.2f * ground.localScale;
+            grassMAT.mainTextureScale = new Vector2(ground.localScale.x * 10f, ground.localScale.z * 10f); 
+        }
+        chooseQuest();
     }
 
     public void resetGame()
@@ -226,6 +268,18 @@ public class GridBuildSystem : MonoBehaviour
             active.GetComponent<Tracker>().placed = true;
 
             BuildingSO buildingSO = active.GetComponent<Tracker>().type;
+
+            if(buildingSO == currentQuest.buildingType)
+            {
+                string s = "";
+                if (currentQuest.numberOfBuildings > 1)
+                {
+                    s = "s";
+                }
+                built += 1;
+                built = Mathf.Clamp(built, Mathf.NegativeInfinity, currentQuest.numberOfBuildings);
+                questText.text = $"Build {currentQuest.numberOfBuildings} {currentQuest.buildingType.BuildingName + s} ({built}/{currentQuest.numberOfBuildings})";
+            }
 
             energyChange += buildingSO.energyOutput;
             foodChange += buildingSO.foodOutput;
@@ -286,6 +340,17 @@ public class GridBuildSystem : MonoBehaviour
                 if(item.transform.position == pos)
                 {
                     BuildingSO buildingSO = active.GetComponent<Tracker>().type;
+
+                    if (buildingSO == currentQuest.buildingType)
+                    {
+                        string s = "";
+                        if (currentQuest.numberOfBuildings > 1)
+                        {
+                            s = "s";
+                        }
+                        built -= 1;
+                        questText.text = $"Build {currentQuest.numberOfBuildings} {currentQuest.buildingType.BuildingName + s} ({built}/{currentQuest.numberOfBuildings})";
+                    }
 
                     energyChange -= buildingSO.energyOutput;
                     foodChange -= buildingSO.foodOutput;

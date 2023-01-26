@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create Building", fileName = " Building")]
 public class BuildingSO : ScriptableObject
 {
+    public string BuildingName;
     public GameObject buildingPrefab;
     public ServiceSO buildingService;
     public float cost;

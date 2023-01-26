@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47eddaa3ae82c8748a22e0bd279cca48, type: 3}
-  m_Name: House
+  m_Name: Office
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 1593937742441068266, guid: ddbfc78d5b9bfbf419c65763e029ab0e,
+  BuildingName: Office
+  buildingPrefab: {fileID: 9025951313680788812, guid: 82b16f36fe6f51540bc838ec18e8871e,
     type: 3}
   buildingService: {fileID: 0}
-  cost: 5
-  population: 5
-  energyOutput: -5
-  moneyOutput: 0
-  foodOutput: -5
+  cost: 30
+  population: 0
+  energyOutput: -10
+  moneyOutput: 20
+  foodOutput: 0
   happinessOutput: 0
-  isTaxable: 1
-  taxFrequency: 5
+  isTaxable: 0
+  taxFrequency: 0

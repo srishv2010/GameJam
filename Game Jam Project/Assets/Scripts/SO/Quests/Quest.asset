@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff8d56ddd738c5743995d9e75dcfea86, type: 3}
+  m_Name: Quest
+  m_EditorClassIdentifier: 
+  quests:
+  - difficulty: 1
+    questsList:
+    - buildingType: {fileID: 11400000, guid: 93ed0ed61d03746438535283b2ad1af8, type: 2}
+      numberOfBuildings: 1
+    - buildingType: {fileID: 11400000, guid: 173f215255ceb164288e820f207d5568, type: 2}
+      numberOfBuildings: 2
+  - difficulty: 2
+    questsList:
+    - buildingType: {fileID: 11400000, guid: 93ed0ed61d03746438535283b2ad1af8, type: 2}
+      numberOfBuildings: 2
+    - buildingType: {fileID: 11400000, guid: 173f215255ceb164288e820f207d5568, type: 2}
+      numberOfBuildings: 3
+    - buildingType: {fileID: 11400000, guid: 117249a91cf4fe64ab5555fa4ed3f33b, type: 2}
+      numberOfBuildings: 1
+  - difficulty: 3
+    questsList:
+    - buildingType: {fileID: 11400000, guid: 93ed0ed61d03746438535283b2ad1af8, type: 2}
+      numberOfBuildings: 3
+    - buildingType: {fileID: 11400000, guid: 173f215255ceb164288e820f207d5568, type: 2}
+      numberOfBuildings: 4
+    - buildingType: {fileID: 11400000, guid: 117249a91cf4fe64ab5555fa4ed3f33b, type: 2}
+      numberOfBuildings: 2
+  - difficulty: 4
+    questsList:
+    - buildingType: {fileID: 11400000, guid: 93ed0ed61d03746438535283b2ad1af8, type: 2}
+      numberOfBuildings: 4
+    - buildingType: {fileID: 11400000, guid: 173f215255ceb164288e820f207d5568, type: 2}
+      numberOfBuildings: 5
+    - buildingType: {fileID: 11400000, guid: 117249a91cf4fe64ab5555fa4ed3f33b, type: 2}
+      numberOfBuildings: 2
+    - buildingType: {fileID: 11400000, guid: 2e16a939f9361484c9c507ae0dcb2212, type: 2}
+      numberOfBuildings: 1
+  - difficulty: 5
+    questsList:
+    - buildingType: {fileID: 11400000, guid: 93ed0ed61d03746438535283b2ad1af8, type: 2}
+      numberOfBuildings: 4
+    - buildingType: {fileID: 11400000, guid: 173f215255ceb164288e820f207d5568, type: 2}
+      numberOfBuildings: 5
+    - buildingType: {fileID: 11400000, guid: 2e16a939f9361484c9c507ae0dcb2212, type: 2}
+      numberOfBuildings: 2
+    - buildingType: {fileID: 11400000, guid: 117249a91cf4fe64ab5555fa4ed3f33b, type: 2}
+      numberOfBuildings: 3
