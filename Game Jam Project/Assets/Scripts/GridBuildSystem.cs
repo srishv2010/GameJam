@@ -83,6 +83,7 @@ public class GridBuildSystem : MonoBehaviour
     public Color selectedColor;
     public Color buttonColor;
 
+    public TextMeshProUGUI roundsText;
     private void Start()
     {
         chooseQuest();
@@ -97,6 +98,7 @@ public class GridBuildSystem : MonoBehaviour
     {
         if (gameRunning)
         {
+            roundsText.text = $"Round {roundsComplete} / {levelsComplete * 20}";
             if (tutorialComplete)
             {
                 timeLeft -= Time.deltaTime;
