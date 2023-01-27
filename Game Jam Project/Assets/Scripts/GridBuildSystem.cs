@@ -76,6 +76,7 @@ public class GridBuildSystem : MonoBehaviour
     public Quests.Quest currentQuest;
     public float built;
     public TextMeshProUGUI questText;
+    public TextMeshProUGUI dmsgText;
 
     public Color changeColor;
     public Color changeColorH;
@@ -94,98 +95,101 @@ public class GridBuildSystem : MonoBehaviour
 
     void Update()
     {
-        if (tutorialComplete)
+        if (gameRunning)
         {
-            timeLeft -= Time.deltaTime;
-            if(timeLeft < 0)
+            if (tutorialComplete)
             {
-                timeLeft = timePerTurn;
-                GameIteration();
+                timeLeft -= Time.deltaTime;
+                if(timeLeft < 0)
+                {
+                    timeLeft = timePerTurn;
+                    GameIteration();
+                }
             }
-        }
-        roundTimer.value = timeLeft;
-        roundTimeLeftText.text = Mathf.Ceil(timeLeft).ToString();
+            roundTimer.value = timeLeft;
+            roundTimeLeftText.text = Mathf.Ceil(timeLeft).ToString();
 
-        moneyText.text = ("Gold: £" + money.ToString());
-        foodText.text = ("Food: " + foodSupply.ToString());
-        energyText.text = ("Energy: " + energySupply.ToString());
-        populationText.text = ("Population: " + population.ToString() + " / " + populationCapacity.ToString());
+            moneyText.text = ("Gold: £" + money.ToString());
+            foodText.text = ("Food: " + foodSupply.ToString());
+            energyText.text = ("Energy: " + energySupply.ToString());
+            populationText.text = ("Population: " + population.ToString() + " / " + populationCapacity.ToString());
 
-        moneyChangeText.text = (moneyChange.ToString());
-        foodChangeText.text = (foodChange.ToString());
-        energyChangeText.text = (energyChange.ToString());
-        populationChangeText.text = (populationChange.ToString());
+            moneyChangeText.text = (moneyChange.ToString());
+            foodChangeText.text = (foodChange.ToString());
+            energyChangeText.text = (energyChange.ToString());
+            populationChangeText.text = (populationChange.ToString());
 
-        if (money + moneyChange <= 0)
-        {
-            moneyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
-        }
-        else
-        {
-            moneyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
-        }
-
-        if (foodSupply + foodChange <= 0)
-        {
-            foodChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
-        }
-        else
-        {
-            foodChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
-        }
-
-        if (energySupply + energyChange <= 0)
-        {
-            energyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
-        }
-        else
-        {
-            energyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
-        }
-
-        if (population + populationChange > populationCapacity)
-        {
-            populationChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
-        }
-        else
-        {
-            populationChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Destroy(active);
-            active = null;
-            deleteMode = false;
-            moveMode = false;
-            buildMode = false;
-
-            foreach (Image img in typeButtons)
+            if (money + moneyChange <= 0)
             {
-                img.color = buttonColor;
+                moneyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
             }
-        }
-
-        if (active != null && Input.GetMouseButtonDown(2) && moveMode == true)
-        {
-            Place();
-        }
-
-        if (moveMode)
-        {
-            Move();
-        }
-
-        if (Input.GetMouseButtonDown(2))
-        {
-            if (buildMode == true && !moveMode)
+            else
             {
-                Build();
+                moneyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
             }
-            if (deleteMode)
+
+            if (foodSupply + foodChange <= 0)
             {
-                Delete();
+                foodChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
+            }
+            else
+            {
+                foodChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
+            }
+
+            if (energySupply + energyChange <= 0)
+            {
+                energyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
+            }
+            else
+            {
+                energyChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
+            }
+
+            if (population + populationChange > populationCapacity)
+            {
+                populationChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColorH;
+            }
+            else
+            {
+                populationChangeText.transform.parent.gameObject.GetComponent<Image>().color = changeColor;
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                Destroy(active);
+                active = null;
+                deleteMode = false;
+                moveMode = false;
+                buildMode = false;
+
+                foreach (Image img in typeButtons)
+                {
+                    img.color = buttonColor;
+                }
+            }
+
+            if (active != null && Input.GetMouseButtonDown(2) && moveMode == true)
+            {
+                Place();
+            }
+
+            if (moveMode)
+            {
+                Move();
+            }
+
+            if (Input.GetMouseButtonDown(2))
+            {
+                if (buildMode == true && !moveMode)
+                {
+                    Build();
+                }
+                if (deleteMode)
+                {
+                    Delete();
+                }
             }
         }
     }
@@ -220,12 +224,46 @@ public class GridBuildSystem : MonoBehaviour
         energySupply += energyChange;
         foodSupply += foodChange;
         money += moneyChange;
-        if (money < 0 || foodSupply < 0 || energySupply < 0 || population > populationCapacity || currentQuest.numberOfBuildings > built)
+        bool m = money < 0;
+        bool f = foodSupply < 0;
+        bool e = energySupply < 0;
+        bool p = population > populationCapacity;
+        bool c = currentQuest.numberOfBuildings > built;
+        string dmsg = "";
+        if (m)
         {
+            dmsg = "You went bankrupt";
             gameRunning = false;
             gameOverScreen.SetActive(true);
         }
-        if(roundsComplete == levelsComplete * 20)
+        if (f)
+        {
+            dmsg = "Your citizens starved";
+            gameRunning = false;
+            gameOverScreen.SetActive(true);
+        }
+        if (e)
+        {
+            dmsg = "The lights went out";
+            gameRunning = false;
+            gameOverScreen.SetActive(true);
+        }
+        if (p)
+        {
+            dmsg = "Your citizens ran out of place";
+            gameRunning = false;
+            gameOverScreen.SetActive(true);
+        }
+        if (c)
+        {
+            dmsg = "You failed to meet your citizens demands";
+            gameRunning = false;
+            gameOverScreen.SetActive(true);
+        }
+        dmsgText.text = dmsg;
+
+
+        if (roundsComplete == levelsComplete * 20)
         {
             levelsComplete += 1;
             ground.localScale = 1.2f * ground.localScale;
