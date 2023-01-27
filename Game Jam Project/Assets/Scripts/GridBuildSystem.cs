@@ -234,35 +234,35 @@ public class GridBuildSystem : MonoBehaviour
         string dmsg = "";
         if (m)
         {
-            dmsg = "You went bankrupt";
+            dmsg = "You went bankrupt. ";
             gameRunning = false;
             gameOverScreen.SetActive(true);
         }
         if (f)
         {
-            dmsg = "Your citizens starved";
+            dmsg = "Your citizens starved. ";
             gameRunning = false;
             gameOverScreen.SetActive(true);
         }
         if (e)
         {
-            dmsg = "The lights went out";
+            dmsg = "The lights went out. ";
             gameRunning = false;
             gameOverScreen.SetActive(true);
         }
         if (p)
         {
-            dmsg = "Your citizens ran out of place";
+            dmsg = "Your citizens ran out of place. ";
             gameRunning = false;
             gameOverScreen.SetActive(true);
         }
         if (c)
         {
-            dmsg = "You failed to meet your citizens demands";
+            dmsg = "You failed to meet your citizens demands. ";
             gameRunning = false;
             gameOverScreen.SetActive(true);
         }
-        dmsgText.text = dmsg;
+        dmsgText.text = dmsg + $"You survived {roundsComplete} rounds!";
 
 
         if (roundsComplete == levelsComplete * 20)
